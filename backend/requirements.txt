@@ -1,0 +1,13 @@
+# Runtime dependencies (also packaged into the Lambda function)
+fastapi==0.165.0
+boto3==1.44.12
+pyotp==2.12.1
+argon2-cffi==25.1.0
+PyJWT[crypto]==2.15.1
+cryptography==50.0.2
+httpx==0.28.1
+mangum==0.22.0
+pydantic==2.14.4
+pydantic-settings==2.16.3
+email-validator==2.4.0
+starlette==1.10.0

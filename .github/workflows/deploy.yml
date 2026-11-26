@@ -1,0 +1,80 @@
+name: Deploy to AWS
+
+# Runs on demand, and on every push to main once the AWS connection is set up
+# (repository variables AWS_DEPLOY_ROLE_ARN and TF_STATE_BUCKET, see docs/deploy.md).
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write # GitHub's OIDC token is exchanged for short-lived AWS credentials
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'ap-northeast-1' }}
+
+jobs:
+  deploy:
+    if: ${{ vars.AWS_DEPLOY_ROLE_ARN != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build API package
+        run: ./scripts/build_lambda.sh
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+      - name: Terraform apply
+        working-directory: infra/terraform
+        env:
+          TF_VAR_region: ${{ env.AWS_REGION }}
+          TF_VAR_google_client_id: ${{ vars.GOOGLE_CLIENT_ID }}
+          TF_VAR_google_client_secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          TF_VAR_budget_email: ${{ vars.BUDGET_EMAIL }}
+        run: |
+          terraform init -input=false \
+            -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}" \
+            -backend-config="key=secure-share/terraform.tfstate" \
+            -backend-config="region=${{ env.AWS_REGION }}"
+          terraform apply -input=false -auto-approve
+          echo "WEB_BUCKET=$(terraform output -raw web_bucket)" >> "$GITHUB_ENV"
+          echo "DISTRIBUTION_ID=$(terraform output -raw distribution_id)" >> "$GITHUB_ENV"
+          echo "APP_URL=$(terraform output -raw app_url)" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Build and upload the web app
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+          # Hashed assets can be cached for a year; index.html must always be fresh.
+          aws s3 sync dist/assets "s3://$WEB_BUCKET/assets" --delete \
+            --cache-control "public,max-age=31536000,immutable"
+          aws s3 sync dist "s3://$WEB_BUCKET" --delete --exclude "assets/*" \
+            --cache-control "no-cache"
+          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths "/index.html" "/"
+
+      - name: Smoke test
+        run: |
+          curl -fsS "$APP_URL/api/health"
+          curl -fsS -o /dev/null "$APP_URL/login"
+          echo "### Deployed: $APP_URL" >> "$GITHUB_STEP_SUMMARY"

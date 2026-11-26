@@ -1,0 +1,710 @@
+[
+ {
+  "events": 21922,
+  "alerts": 72,
+  "attacks": {
+   "brute_force": {
+    "group": "attack",
+    "rule": "brute_force",
+    "n": 10,
+    "detected": 10,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "password_spray": {
+    "group": "attack",
+    "rule": "password_spray",
+    "n": 6,
+    "detected": 6,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "stolen_credentials_abroad": {
+    "group": "attack",
+    "rule": "impossible_travel",
+    "n": 8,
+    "detected": 8,
+    "delays": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "data_exfiltration": {
+    "group": "attack",
+    "rule": "download_burst",
+    "n": 8,
+    "detected": 8,
+    "delays": [
+     18,
+     20,
+     18,
+     19,
+     19,
+     18,
+     13,
+     20
+    ]
+   },
+   "night_login_compromise": {
+    "group": "attack",
+    "rule": "off_hours",
+    "n": 6,
+    "detected": 4,
+    "delays": [
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "link_password_guessing": {
+    "group": "attack",
+    "rule": "link_password_guessing",
+    "n": 6,
+    "detected": 6,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "mass_link_creation": {
+    "group": "attack",
+    "rule": "mass_link_creation",
+    "n": 5,
+    "detected": 5,
+    "delays": [
+     10,
+     10,
+     10,
+     10,
+     10
+    ]
+   },
+   "mass_deletion": {
+    "group": "attack",
+    "rule": "mass_deletion",
+    "n": 5,
+    "detected": 5,
+    "delays": [
+     15,
+     15,
+     15,
+     15,
+     15
+    ]
+   },
+   "slow_brute_force": {
+    "group": "evasive",
+    "rule": "brute_force",
+    "n": 4,
+    "detected": 0,
+    "delays": []
+   },
+   "slow_exfiltration": {
+    "group": "evasive",
+    "rule": "download_burst",
+    "n": 4,
+    "detected": 1,
+    "delays": [
+     14
+    ]
+   }
+  },
+  "false_alarms": {
+   "new_country": 5,
+   "download_burst": 5,
+   "impossible_travel": 1
+  },
+  "true_alerts": 60,
+  "user_days": 1200
+ },
+ {
+  "events": 24797,
+  "alerts": 68,
+  "attacks": {
+   "brute_force": {
+    "group": "attack",
+    "rule": "brute_force",
+    "n": 10,
+    "detected": 10,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "password_spray": {
+    "group": "attack",
+    "rule": "password_spray",
+    "n": 6,
+    "detected": 6,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "stolen_credentials_abroad": {
+    "group": "attack",
+    "rule": "impossible_travel",
+    "n": 8,
+    "detected": 8,
+    "delays": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "data_exfiltration": {
+    "group": "attack",
+    "rule": "download_burst",
+    "n": 8,
+    "detected": 7,
+    "delays": [
+     19,
+     20,
+     15,
+     20,
+     20,
+     18,
+     18
+    ]
+   },
+   "night_login_compromise": {
+    "group": "attack",
+    "rule": "off_hours",
+    "n": 6,
+    "detected": 3,
+    "delays": [
+     1,
+     1,
+     1
+    ]
+   },
+   "link_password_guessing": {
+    "group": "attack",
+    "rule": "link_password_guessing",
+    "n": 6,
+    "detected": 6,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "mass_link_creation": {
+    "group": "attack",
+    "rule": "mass_link_creation",
+    "n": 5,
+    "detected": 5,
+    "delays": [
+     10,
+     10,
+     9,
+     10,
+     10
+    ]
+   },
+   "mass_deletion": {
+    "group": "attack",
+    "rule": "mass_deletion",
+    "n": 5,
+    "detected": 5,
+    "delays": [
+     15,
+     15,
+     15,
+     15,
+     15
+    ]
+   },
+   "slow_brute_force": {
+    "group": "evasive",
+    "rule": "brute_force",
+    "n": 4,
+    "detected": 0,
+    "delays": []
+   },
+   "slow_exfiltration": {
+    "group": "evasive",
+    "rule": "download_burst",
+    "n": 4,
+    "detected": 0,
+    "delays": []
+   }
+  },
+  "false_alarms": {
+   "new_country": 5,
+   "download_burst": 6
+  },
+  "true_alerts": 57,
+  "user_days": 1200
+ },
+ {
+  "events": 20219,
+  "alerts": 66,
+  "attacks": {
+   "brute_force": {
+    "group": "attack",
+    "rule": "brute_force",
+    "n": 10,
+    "detected": 10,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "password_spray": {
+    "group": "attack",
+    "rule": "password_spray",
+    "n": 6,
+    "detected": 6,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "stolen_credentials_abroad": {
+    "group": "attack",
+    "rule": "impossible_travel",
+    "n": 8,
+    "detected": 8,
+    "delays": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "data_exfiltration": {
+    "group": "attack",
+    "rule": "download_burst",
+    "n": 8,
+    "detected": 8,
+    "delays": [
+     20,
+     20,
+     13,
+     20,
+     20,
+     20,
+     20,
+     18
+    ]
+   },
+   "night_login_compromise": {
+    "group": "attack",
+    "rule": "off_hours",
+    "n": 6,
+    "detected": 1,
+    "delays": [
+     1
+    ]
+   },
+   "link_password_guessing": {
+    "group": "attack",
+    "rule": "link_password_guessing",
+    "n": 6,
+    "detected": 6,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "mass_link_creation": {
+    "group": "attack",
+    "rule": "mass_link_creation",
+    "n": 5,
+    "detected": 5,
+    "delays": [
+     10,
+     10,
+     10,
+     10,
+     10
+    ]
+   },
+   "mass_deletion": {
+    "group": "attack",
+    "rule": "mass_deletion",
+    "n": 5,
+    "detected": 5,
+    "delays": [
+     15,
+     15,
+     15,
+     15,
+     15
+    ]
+   },
+   "slow_brute_force": {
+    "group": "evasive",
+    "rule": "brute_force",
+    "n": 4,
+    "detected": 0,
+    "delays": []
+   },
+   "slow_exfiltration": {
+    "group": "evasive",
+    "rule": "download_burst",
+    "n": 4,
+    "detected": 0,
+    "delays": []
+   }
+  },
+  "false_alarms": {
+   "new_country": 6,
+   "off_hours": 2,
+   "download_burst": 1
+  },
+  "true_alerts": 57,
+  "user_days": 1200
+ },
+ {
+  "events": 20075,
+  "alerts": 67,
+  "attacks": {
+   "brute_force": {
+    "group": "attack",
+    "rule": "brute_force",
+    "n": 10,
+    "detected": 10,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "password_spray": {
+    "group": "attack",
+    "rule": "password_spray",
+    "n": 6,
+    "detected": 6,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "stolen_credentials_abroad": {
+    "group": "attack",
+    "rule": "impossible_travel",
+    "n": 8,
+    "detected": 8,
+    "delays": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "data_exfiltration": {
+    "group": "attack",
+    "rule": "download_burst",
+    "n": 8,
+    "detected": 8,
+    "delays": [
+     19,
+     20,
+     20,
+     20,
+     20,
+     20,
+     19,
+     20
+    ]
+   },
+   "night_login_compromise": {
+    "group": "attack",
+    "rule": "off_hours",
+    "n": 6,
+    "detected": 3,
+    "delays": [
+     1,
+     1,
+     1
+    ]
+   },
+   "link_password_guessing": {
+    "group": "attack",
+    "rule": "link_password_guessing",
+    "n": 6,
+    "detected": 6,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "mass_link_creation": {
+    "group": "attack",
+    "rule": "mass_link_creation",
+    "n": 5,
+    "detected": 5,
+    "delays": [
+     10,
+     10,
+     10,
+     10,
+     10
+    ]
+   },
+   "mass_deletion": {
+    "group": "attack",
+    "rule": "mass_deletion",
+    "n": 5,
+    "detected": 5,
+    "delays": [
+     15,
+     15,
+     15,
+     15,
+     15
+    ]
+   },
+   "slow_brute_force": {
+    "group": "evasive",
+    "rule": "brute_force",
+    "n": 4,
+    "detected": 0,
+    "delays": []
+   },
+   "slow_exfiltration": {
+    "group": "evasive",
+    "rule": "download_burst",
+    "n": 4,
+    "detected": 0,
+    "delays": []
+   }
+  },
+  "false_alarms": {
+   "new_country": 4,
+   "off_hours": 2,
+   "download_burst": 2
+  },
+  "true_alerts": 59,
+  "user_days": 1200
+ },
+ {
+  "events": 22089,
+  "alerts": 75,
+  "attacks": {
+   "brute_force": {
+    "group": "attack",
+    "rule": "brute_force",
+    "n": 10,
+    "detected": 10,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "password_spray": {
+    "group": "attack",
+    "rule": "password_spray",
+    "n": 6,
+    "detected": 6,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "stolen_credentials_abroad": {
+    "group": "attack",
+    "rule": "impossible_travel",
+    "n": 8,
+    "detected": 8,
+    "delays": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "data_exfiltration": {
+    "group": "attack",
+    "rule": "download_burst",
+    "n": 8,
+    "detected": 8,
+    "delays": [
+     13,
+     20,
+     17,
+     16,
+     20,
+     18,
+     20,
+     19
+    ]
+   },
+   "night_login_compromise": {
+    "group": "attack",
+    "rule": "off_hours",
+    "n": 6,
+    "detected": 1,
+    "delays": [
+     1
+    ]
+   },
+   "link_password_guessing": {
+    "group": "attack",
+    "rule": "link_password_guessing",
+    "n": 6,
+    "detected": 6,
+    "delays": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   "mass_link_creation": {
+    "group": "attack",
+    "rule": "mass_link_creation",
+    "n": 5,
+    "detected": 5,
+    "delays": [
+     10,
+     10,
+     10,
+     10,
+     10
+    ]
+   },
+   "mass_deletion": {
+    "group": "attack",
+    "rule": "mass_deletion",
+    "n": 5,
+    "detected": 5,
+    "delays": [
+     15,
+     15,
+     15,
+     15,
+     15
+    ]
+   },
+   "slow_brute_force": {
+    "group": "evasive",
+    "rule": "brute_force",
+    "n": 4,
+    "detected": 0,
+    "delays": []
+   },
+   "slow_exfiltration": {
+    "group": "evasive",
+    "rule": "download_burst",
+    "n": 4,
+    "detected": 1,
+    "delays": [
+     10
+    ]
+   }
+  },
+  "false_alarms": {
+   "new_country": 8,
+   "download_burst": 5
+  },
+  "true_alerts": 57,
+  "user_days": 1200
+ }
+]

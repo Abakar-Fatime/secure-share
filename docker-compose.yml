@@ -1,0 +1,37 @@
+# Full local stack: AWS emulator (moto) + API + web app.
+#   docker compose up --build
+# then open http://localhost:5173 and sign in with the demo account printed by the "api" service.
+services:
+  aws:
+    # Local AWS emulator (moto) for DynamoDB and S3, run from the API image.
+    build: ./backend
+    command: moto_server -H 0.0.0.0 -p 5000
+    ports: ["5050:5000"]
+
+  api:
+    build: ./backend
+    depends_on: [aws]
+    environment:
+      SS_ENVIRONMENT: local
+      SS_APP_URL: http://localhost:5173
+      SS_AWS_ENDPOINT_URL: http://aws:5000
+      SS_S3_PRESIGN_ENDPOINT_URL: http://localhost:5050
+      SS_TRUST_DEMO_HEADERS: "true"
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+    command: >
+      sh -c "sleep 2 && python -m app.cli init-local && python -m app.cli seed-demo &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports: ["8000:8000"]
+
+  web:
+    image: node:22-alpine
+    working_dir: /app
+    depends_on: [api]
+    environment:
+      VITE_API_PROXY: http://api:8000
+    command: sh -c "npm ci && npx vite --host 0.0.0.0 --port 5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports: ["5173:5173"]

@@ -1,0 +1,22 @@
+# Dependencies are pinned in requirements.txt (runtime, also bundled into Lambda)
+# and requirements-dev.txt (tests, linting, local server).
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "SIM"]
+ignore = ["B008", "S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S105", "S106"]
+"scripts/*" = ["S311", "S105", "S106"]
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/lambda_handler.py"]

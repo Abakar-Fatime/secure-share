@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements*.txt
+      - run: pip install -r requirements-dev.txt pip-audit
+      - name: Lint
+        run: ruff check . && ruff format --check .
+      - name: Tests
+        run: pytest --cov --cov-report=term --cov-fail-under=90
+      - name: Known vulnerabilities in dependencies
+        run: pip-audit -r requirements.txt
+      - name: Detector evaluation still meets its bar
+        run: |
+          python -m scripts.evaluate_detector --seeds 2 --out /tmp/eval.md
+          python - <<'EOF'
+          import json
+          runs = json.load(open("/tmp/eval.json"))
+          det = sum(a["detected"] for r in runs for a in r["attacks"].values() if a["group"] == "attack")
+          n = sum(a["n"] for r in runs for a in r["attacks"].values() if a["group"] == "attack")
+          print(f"detection rate {det}/{n}")
+          assert det / n >= 0.85, "detector regressed"
+          EOF
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: Known vulnerabilities in production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/terraform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false
+      - name: Validate (with a placeholder package)
+        run: |
+          mkdir -p ../../build && echo placeholder > /tmp/p && zip -j ../../build/lambda.zip /tmp/p
+          terraform validate
+
+  lambda-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: ./scripts/build_lambda.sh
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start the full local stack
+        run: docker compose up --build --detach
+      - name: Smoke test through the web app's proxy
+        run: |
+          for i in $(seq 1 60); do
+            curl -fsS http://localhost:5173/api/health && break
+            sleep 5
+          done
+          curl -fsS http://localhost:5173/api/health
+          curl -fsS http://localhost:5173/api/auth/config
+      - if: failure()
+        run: docker compose logs
+      - if: always()
+        run: docker compose down
