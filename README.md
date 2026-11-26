@@ -1,5 +1,7 @@
 # secure-share
 
+[![CI](https://github.com/Abakar-Fatime/secure-share/actions/workflows/ci.yml/badge.svg)](https://github.com/Abakar-Fatime/secure-share/actions/workflows/ci.yml)
+
 **Share files safely with colleagues and with people outside your organisation, and know every time a file is opened.**
 
 secure-share is a full-stack web application for sending sensitive documents without email attachments or messaging apps. Files sit in private cloud storage, every access is logged, and a detection engine flags suspicious behaviour (stolen passwords, logins from two countries at once, someone downloading everything before leaving) with a plain-language explanation an admin can act on.
